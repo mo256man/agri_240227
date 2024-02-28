@@ -224,7 +224,8 @@ class DB():
         ax.set_title(f"{date}の気温 平均{mean_temp}度")
         fig.canvas.draw()
         imgB64 = fig2str64(fig)
-        plt.close(fig)
+        # plt.close(fig)
+        plt.cla()
         return imgB64
 
 
@@ -405,7 +406,8 @@ class DB():
         ax.axvspan(dt_sunset, dt_24, color="gray", alpha=0.3)           # 夜の背景
         fig.canvas.draw()
         imgB64 = fig2str64(fig)
-        plt.close(fig)
+        # plt.close(fig)
+        plt.cla()
         return imgB64
 
 
@@ -737,6 +739,7 @@ def fig2str64(fig):
     _, imgEnc = cv2.imencode(".jpg", img)                               # メモリ上にエンコード
     imgB64 = base64.b64encode(imgEnc)                                   # base64にエンコード
     strB64 = "data:image/jpg;base64," + str(imgB64, "utf-8")            # 文字列化
+    del fig, img, imgEnc, imgB64                                        # 戻り値として返すstrB64以外は明示的に削除する
     return strB64
 
 
